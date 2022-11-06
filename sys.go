@@ -1,3 +1,4 @@
+//go:build windows
 // +build windows
 
 package wincred
@@ -59,8 +60,9 @@ const (
 	sysCRED_TYPE_DOMAIN_EXTENDED         sysCRED_TYPE = 0x6
 
 	// https://docs.microsoft.com/en-us/windows/desktop/Debug/system-error-codes
-	sysERROR_NOT_FOUND         = syscall.Errno(1168)
-	sysERROR_INVALID_PARAMETER = syscall.Errno(87)
+	sysERROR_BAD_USERNAME      = syscall.ERROR_BAD_USERNAME
+	sysERROR_INVALID_PARAMETER = syscall.ERROR_INVALID_PARAMETER
+	sysERROR_NOT_FOUND         = syscall.ERROR_NOT_FOUND
 )
 
 // https://docs.microsoft.com/en-us/windows/desktop/api/wincred/nf-wincred-credreadw
