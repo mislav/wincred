@@ -64,6 +64,7 @@ const (
 )
 
 // https://docs.microsoft.com/en-us/windows/desktop/api/wincred/nf-wincred-credreadw
+//go:uintptrescapes
 func sysCredRead(targetName string, typ sysCRED_TYPE) (*Credential, error) {
 	var pcred *sysCREDENTIAL
 	targetNamePtr, _ := syscall.UTF16PtrFromString(targetName)
@@ -82,6 +83,7 @@ func sysCredRead(targetName string, typ sysCRED_TYPE) (*Credential, error) {
 }
 
 // https://docs.microsoft.com/en-us/windows/desktop/api/wincred/nf-wincred-credwritew
+//go:uintptrescapes
 func sysCredWrite(cred *Credential, typ sysCRED_TYPE) error {
 	ncred := sysFromCredential(cred)
 	ncred.Type = uint32(typ)
@@ -97,6 +99,7 @@ func sysCredWrite(cred *Credential, typ sysCRED_TYPE) error {
 }
 
 // https://docs.microsoft.com/en-us/windows/desktop/api/wincred/nf-wincred-creddeletew
+//go:uintptrescapes
 func sysCredDelete(cred *Credential, typ sysCRED_TYPE) error {
 	targetNamePtr, _ := syscall.UTF16PtrFromString(cred.TargetName)
 	ret, _, err := procCredDelete.Call(
@@ -112,6 +115,7 @@ func sysCredDelete(cred *Credential, typ sysCRED_TYPE) error {
 }
 
 // https://docs.microsoft.com/en-us/windows/desktop/api/wincred/nf-wincred-credenumeratew
+//go:uintptrescapes
 func sysCredEnumerate(filter string, all bool) ([]*Credential, error) {
 	var count int
 	var pcreds uintptr
