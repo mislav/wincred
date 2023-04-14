@@ -1,4 +1,4 @@
-module github.com/danieljoos/wincred
+module github.com/mislav/wincred
 
 go 1.13
 
