@@ -1,9 +1,11 @@
+//go:build windows
 // +build windows
 
 package wincred
 
 import (
 	"reflect"
+	"runtime"
 	"unsafe"
 
 	syscall "golang.org/x/sys/windows"
@@ -76,9 +78,11 @@ func sysCredRead(targetName string, typ sysCRED_TYPE) (*Credential, error) {
 	if ret == 0 {
 		return nil, err
 	}
-	defer procCredFree.Call(uintptr(unsafe.Pointer(pcred)))
 
-	return sysToCredential(pcred), nil
+	res = sysToCredential(pcred)
+	_, _, _ := procCredFree.Call(uintptr(unsafe.Pointer(&pcred)))
+	runtime.KeepAlive(pcred)
+	return res, nil
 }
 
 // https://docs.microsoft.com/en-us/windows/desktop/api/wincred/nf-wincred-credwritew
