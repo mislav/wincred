@@ -80,7 +80,7 @@ func sysCredRead(targetName string, typ sysCRED_TYPE) (*Credential, error) {
 	}
 
 	res := sysToCredential(pcred)
-	_, _, _ := procCredFree.Call(uintptr(unsafe.Pointer(&pcred)))
+	_, _, _ = procCredFree.Call(uintptr(unsafe.Pointer(&pcred)))
 	runtime.KeepAlive(pcred)
 	return res, nil
 }
